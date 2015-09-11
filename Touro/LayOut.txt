@@ -1,0 +1,106 @@
+﻿ <div class="form-horizontal row-border">
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Estado</label>
+            <div class="col-sm-8 col-lg-6">
+                <asp:DropDownList ID="ddlEstadoProjeto" CssClass="form-control" runat="server" ></asp:DropDownList>
+            </div>
+        </div>
+
+		<div class="form-group">
+            <label class="col-sm-3 control-label">Estado</label>
+            <div class="col-sm-8 col-lg-6">
+                <asp:DropDownList ID="ddlEstadoProjeto" CssClass="form-control" runat="server" ></asp:DropDownList>
+            </div>
+        </div>
+
+		<div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-8">
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Falta o Numero de Serie" ControlToValidate="txtNumSerie" Display="Dynamic" ForeColor="Red"><p><i class="fa fa-asterisk"></i>&nbsp; Falta o Numero de Serie.</p></asp:RequiredFieldValidator>
+                <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="O custo do equipamento esta errado." MinimumValue="0" MaximumValue="9999999999" ControlToValidate="txtCusto" ForeColor="Red"><p><i class="fa fa-asterisk"></i>&nbsp;O custo do equipamento esta errado.</p></asp:RangeValidator>
+            </div>
+        </div>
+
+    </div>
+
+
+
+<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Falta o Nome do Projeto" ControlToValidate="txtNomeProjeto" ForeColor="Red"><i class="fa fa-asterisk"></i> &nbsp; Falta o Nome do Produto.<br /></asp:RequiredFieldValidator>
+
+
+
+<div class="panel panel-default" data-widget='{"draggable": "false"}'>
+        <div class="panel-heading">
+            <h2>
+                
+            </h2>
+            <div class="panel-ctrls button-icon-bg" 
+						data-actions-container="" 
+						data-action-collapse='{"target": ".panel-body"}'>
+					</div>
+        </div>
+        <div class="panel-body">
+           
+        </div>
+
+        <div class="panel-footer" style="text-align: center">
+            
+        </div>
+    </div>
+
+
+	<div class="btn-group">
+        <button type="button" class="btn btn-midnightblue-alt dropdown-toggle" data-toggle="dropdown">
+            <i class="ti ti-settings"></i> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+        </ul>
+    </div>
+
+
+	<div class="btn-group">
+        <button type="button" class="btn btn-default-alt dropdown-toggle" data-toggle="dropdown">
+            Dropdown <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+        </ul>
+    </div>
+
+
+
+	<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h2>Tabs in Panels</h2>
+				<div class="options">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#tab-2-1" data-toggle="tab">Tab 1</a></li>
+						<li><a href="#tab-2-2" data-toggle="tab">Tab 2</a></li>
+						<li><a href="#tab-2-3" data-toggle="tab">Tab 3</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="tab-content">
+					<div class="tab-pane active" id="tab-2-1">
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, blanditiis adipisci eveniet ad sed voluptatum natus voluptatibus vitae deleniti? Iure porro recusandae molestiae molestias similique unde totam non omnis veritatis.</p>
+					</div>
+					<div class="tab-pane" id="tab-2-2">
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, blanditiis adipisci eveniet ad sed voluptatum natus voluptatibus vitae deleniti? Iure porro recusandae molestiae molestias similique unde totam non omnis veritatis.</p>
+					</div>
+					<div class="tab-pane" id="tab-2-3">
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, blanditiis adipisci eveniet ad sed voluptatum natus voluptatibus vitae deleniti? Iure porro recusandae molestiae molestias similique unde totam non omnis veritatis.</p>
+					</div>
+				</div>
+			</div>
+		</div>

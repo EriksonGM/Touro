@@ -1,0 +1,32 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/LayOut.Master" AutoEventWireup="true" CodeBehind="LayOutPanel.master.cs" Inherits="Touro.LayOutPanel" %>
+
+
+<asp:Content ID="Content1" ContentPlaceHolderID="cphHead" runat="server">
+    <asp:ContentPlaceHolder ID="cphHead" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cphBody" runat="server">
+    <div class="panel panel-default" data-widget='{"draggable": "false"}'>
+        <div class="panel-heading">
+            <h2>
+                <asp:ContentPlaceHolder ID="cphTitulo" runat="server"></asp:ContentPlaceHolder>
+            </h2>
+            <div class="panel-ctrls button-icon-bg" 
+						data-actions-container="" 
+						data-action-collapse='{"target": ".panel-body"}'
+						<%--data-action-colorpicker=''
+						data-action-refresh-demo='{"type": "circular"}'--%>
+						>
+					</div>
+        </div>
+        <div class="panel-body">
+            <asp:ContentPlaceHolder ID="cphBody" runat="server"></asp:ContentPlaceHolder>
+        </div>
+
+        <div class="panel-footer" style="text-align: center">
+            <asp:ContentPlaceHolder ID="cphFooter" runat="server"></asp:ContentPlaceHolder>
+        </div>
+    </div>
+
+    <asp:ContentPlaceHolder ID="cphBodyExtra" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>

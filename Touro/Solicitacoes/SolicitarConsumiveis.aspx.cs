@@ -11,6 +11,7 @@ namespace Touro.Solicitacoes
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            SqlDataSourceDestino.SelectParameters["Id_Usuario"].DefaultValue = WebMatrix.WebData.WebSecurity.CurrentUserId.ToString();
 
         }
     }

@@ -420,13 +420,16 @@ UnidadConsumivel varchar(25) Not Null
 )
 
 Insert Into Tb_UnidadConsumivel values ('Tinteiro')
+Insert Into Tb_UnidadConsumivel values ('Item')
 Insert Into Tb_UnidadConsumivel values ('Toner')
 Insert Into Tb_UnidadConsumivel values ('Caixa')
 Insert Into Tb_UnidadConsumivel values ('Resma')
 Insert Into Tb_UnidadConsumivel values ('Bidon')
 Insert Into Tb_UnidadConsumivel values ('Garrafa')
 Insert Into Tb_UnidadConsumivel values ('Lata')
-
+Insert Into Tb_UnidadConsumivel values ('Pacote')
+Insert Into Tb_UnidadConsumivel values ('Embalagem')
+Insert Into Tb_UnidadConsumivel values ('Rolo')
 --Insert Into Tb_UnidadConsumivel values ('')
 go
 
@@ -435,8 +438,10 @@ Create Table Tb_Consumivel
 Id_Consumivel Int Not Null Identity Primary Key,
 Id_TipoConsumivel Int Not Null References Tb_TipoConsumivel (Id_TipoConsumivel),
 Id_UnidadConsumivel Int Not Null References Tb_UnidadConsumivel (Id_UnidadConsumivel),
-Descr varchar(50) Not Null Unique
+Descr varchar(50) Not Null Unique,
+Quantidade Int Not Null Default 0
 )
+
 go
 
 --Select * from Tb_Consumivel
@@ -461,7 +466,7 @@ Return @Id_Consumivel
 End
 go
 
-drop Table Tb_EntradaStock
+--drop Table Tb_EntradaStock
 Create Table Tb_EntradaStock
 (
 Id_EntradaStock Int Not Null Identity Primary Key,
@@ -475,7 +480,7 @@ DataEntrada DateTime Not Null Default GetDate()
 )
 go
 --select * from Tb_EntradaStock
-Create Proc AddEntradaStock
+Alter Proc AddEntradaStock
 @Id_Usuario Int,
 @Id_Consumivel Int,
 @CustoUnitario Money,
@@ -483,8 +488,13 @@ Create Proc AddEntradaStock
 @Fornecedor varchar(30),
 @Obs varchar(1000)
 as
+Begin
 
 Insert Into Tb_EntradaStock(Id_Consumivel,Id_Usuario,CustoUnitario,Quantidade,Fornecedor,Obs) values (@Id_Consumivel,@Id_Usuario,@CustoUnitario,@Quantidade,@Fornecedor,@Obs)
+
+Declare @Exist Int = (Select Quantidade from Tb_Consumivel where Id_Consumivel = @Id_Consumivel)
+
+Update Tb_Consumivel set Quantidade = @Exist + @Quantidade Where Id_Consumivel = @Id_Consumivel
 
 Declare @Descr varchar(50) = (Select Descr from Tb_Consumivel Where Id_Consumivel = @Id_Consumivel)
 
@@ -498,17 +508,84 @@ Declare @Id_EntradaStock varchar(15) = (Select IDENT_CURRENT('Tb_EntradaStock'))
 Insert Into Tb_Reg (Id_Usuario,Reg) values (@Id_Usuario,'Consumivel : <a href="/Patrimonio/Consumivel.aspx?Id=' + Convert(varchar(7),@Id_Consumivel) +'">'+@Unidad +' - '+ @Descr +'</a> inserido en <a href="/Patrimonio/ExistenciasConsumiveis.aspx?Id='+@Id_EntradaStock+' ">Stock.</a>')
 
 Return @Id_EntradaStock
-
+End
 go
 
+--Drop
+Create Table Tb_Solicitantes
+(
+Id_Solicitante Int Not Null Identity Primary Key,
+Id_Usuario Int Not Null References Tb_Usuario (Id_Usuario),
+Id_Sala Int Not Null References Tb_Sala (Id_Sala)
+)
+go
+
+Create Proc AddSolicitante
+@Id_Usuario Int,
+@Id_Sala Int,
+@Id_Solicitante Int
+as
+Begin
+
+Insert Into Tb_Solicitantes values (@Id_Solicitante,@Id_Sala)
+
+Declare @Solicitante varchar(50) = (Select Tb_Usuario.Nome from Tb_Usuario where Id_Usuario = @Id_Solicitante)
+
+Declare @Sala varchar(50) = (Select Sala from Tb_Sala Where Id_Sala = @Id_Sala)
+
+Insert Into Tb_Reg (Id_Usuario,Reg) values (@Id_Usuario,'Solicitante <b>' + @Solicitante +'</b> adicionado a sala : <a href="/Patrimonio/Sala.aspx?Id=' + Convert(varchar(10),@Id_Sala) +'">'+@Sala +'</a>.')
+
+Return (Select IDENT_CURRENT('Tb_Solicitante')) 
+
+End
+go
+
+Create Proc DelSolicitante
+@Id_Usuario Int,
+@Id_Solicitante Int
+as
+Begin
+
+Declare @Solicitante varchar(50) = (Select Tb_Usuario.Nome from Tb_Usuario where Id_Usuario = @Id_Solicitante)
+
+Declare @Sala varchar(50) = (Select Sala from Tb_Sala inner join Tb_Solicitantes on Tb_Sala.Id_Sala = Tb_Solicitantes.Id_Sala Where Tb_Solicitantes.Id_Solicitante = @Id_Solicitante)
+
+Declare @Id_Sala Int = (Select Id_Sala from Tb_Sala where Sala = @Sala)
+
+Delete from Tb_Solicitantes where Id_Solicitante = @Id_Solicitante
+
+Insert Into Tb_Reg (Id_Usuario,Reg) values (@Id_Usuario,'Solicitante <b>' + @Solicitante +'</b> eliminado da sala : <a href="/Patrimonio/Sala.aspx?Id=' + Convert(varchar(10),@Id_Sala) +'">'+@Sala +'</a>.')
+
+Return (Select IDENT_CURRENT('Tb_Solicitante')) 
+
+End
+go
+
+
+
+--Exec AddSolicitante 1,2,1
 
 Create Table Tb_SaidaStock
 (
 Id_SaidaStock Int Not Null Identity Primary Key,
---Id_Usuario Int Not Null References Tb_Usuario (Id_Usuario),
+Id_Usuario Int Not Null References Tb_Usuario (Id_Usuario),
 Id_Consumivel Int Not Null References Tb_Consumivel (Id_Consumivel),
+Id_Sala Int Not Null References Tb_Sala (Id_Sala),
+Data Datetime default GetDate(),
 Quantidade Int Not Null
 )
 go
 
 --Select AVG(CustoUnitario) from Tb_EntradaStock Where Id_Consumivel = 1
+
+
+SELECT        SUM (Tb_EntradaStock.Quantidade ) as Entradas
+FROM            Tb_EntradaStock INNER JOIN
+                         Tb_Consumivel ON Tb_EntradaStock.Id_Consumivel = Tb_Consumivel.Id_Consumivel
+WHERE        (Tb_Consumivel.Id_Consumivel = 2)
+
+SELECT        SUM(Tb_EntradaStock.Quantidade) AS Entrada, SUM(Tb_SaidaStock.Quantidade) AS Saida
+FROM            Tb_EntradaStock CROSS JOIN
+                         Tb_SaidaStock
+GROUP BY Tb_SaidaStock.Quantidade
+

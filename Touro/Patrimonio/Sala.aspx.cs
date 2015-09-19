@@ -13,5 +13,23 @@ namespace Touro.Patrimonio
         {
 
         }
+
+        protected void lvSolicitantes_ItemCommand(object sender, ListViewCommandEventArgs e)
+        {
+            SqlDataSourceSolicitante.DeleteParameters["Id_Usuario"].DefaultValue = WebMatrix.WebData.WebSecurity.CurrentUserId.ToString();
+            SqlDataSourceSolicitante.DeleteParameters["Id_Solicitante"].DefaultValue = e.CommandArgument.ToString();
+            SqlDataSourceSolicitante.Delete();
+            lvSolicitantes.DataBind();
+            ListViewAutorizar.DataBind();
+        }
+
+        protected void ListViewAutorizar_ItemCommand(object sender, ListViewCommandEventArgs e)
+        {
+            SqlDataSourceAutorizar.InsertParameters["Id_Usuario"].DefaultValue = WebMatrix.WebData.WebSecurity.CurrentUserId.ToString();
+            SqlDataSourceAutorizar.InsertParameters["Id_Solicitante"].DefaultValue = e.CommandArgument.ToString();
+            SqlDataSourceAutorizar.Insert();
+            lvSolicitantes.DataBind();
+            ListViewAutorizar.DataBind();
+        }
     }
 }

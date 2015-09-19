@@ -1,7 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/LayOutPanel.master" AutoEventWireup="true" CodeBehind="CadastrarConsumivel.aspx.cs" Inherits="Touro.Patrimonio.CadastrarConsumivel" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphHead" runat="server">
-    <link type="text/css" href="/assets/plugins/pines-notify/pnotify.css" rel="stylesheet"> 
-    <script type="text/javascript" src="/assets/plugins/pines-notify/pnotify.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(function () {
+                $('[data-toggle="popover"]').popover()
+            })
+        });
+    </script>
+    <%--<link type="text/css" href="/assets/plugins/pines-notify/pnotify.css" rel="stylesheet"> 
+    <script type="text/javascript" src="/assets/plugins/pines-notify/pnotify.min.js"></script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphTitulo" runat="server">
     Cadastrar Consumiveis
@@ -36,7 +43,7 @@
 		<div class="form-group">
             <label class="col-sm-3 control-label">Descrição</label>
             <div class="col-sm-6 col-lg-4">
-                <asp:TextBox ID="txtDesc" runat="server" CssClass="form-control" placeholder="Descrição do consumivel" AutoCompleteType="Disabled" MaxLength="50"></asp:TextBox>
+                <asp:TextBox ID="txtDesc" runat="server" CssClass="form-control" placeholder="Descrição do consumivel" AutoCompleteType="Disabled" MaxLength="50" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="right"  data-html="true" data-title="Exemplos" data-content="-Detergente OMO 500Mg</br>-HP 121 Preto<br></b>-Clips 33mm 100pcs" ></asp:TextBox>
             </div>
         </div>
 
@@ -48,8 +55,6 @@
         </div>
 
     </div>
-
-    
 
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="cphFooter" runat="server">

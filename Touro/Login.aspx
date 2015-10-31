@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt">
 <head runat="server">
     <meta charset="utf-8">
-    <title>Login - GestProjeto</title>
+    <title>Login - Touro</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -18,6 +18,8 @@
     <link type="text/css" href="/assets/fonts/themify-icons/themify-icons.css" rel="stylesheet">
     <!-- Themify Icons -->
     <link type="text/css" href="/assets/css/styles.css" rel="stylesheet">
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body class="focused-form animated-content" style="background: url('assets/img/taurus.png') no-repeat fixed center">
     <form id="form1" runat="server">

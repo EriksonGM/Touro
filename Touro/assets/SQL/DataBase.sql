@@ -15,6 +15,10 @@ Delete from Tb_Consumivel
 DBCC CHECKIDENT (Tb_Consumivel,RESEED,0)
 go
 
+Delete from Tb_Msg
+DBCC CHECKIDENT (Tb_Msg,RESEED,0)
+go
+
 Create Table Tb_Usuario
 (
 Id_Usuario Int Not Null Identity Primary Key,
@@ -49,6 +53,64 @@ Select Id_Usuario from Tb_Usuario Where Username = @Username
 
 End
 go
+
+--------------------------------------------------------------------------------------------Mensagens-------------------------------------------------------------------------------
+Create Table Tb_AreaMsg
+(
+Id_AreaMsg Int Not Null Identity Primary Key,
+AreaMsg varchar(25)
+)
+
+Insert Into Tb_AreaMsg values ('Solicitações') --ID 1
+Insert Into Tb_AreaMsg values ('Patrimonio') --ID 2
+Insert Into Tb_AreaMsg values ('Transportes') --ID 3
+Insert Into Tb_AreaMsg values ('Area Técnica') --ID 4
+Insert Into Tb_AreaMsg values ('Administrador') --ID 5
+
+Create Table Tb_TipoMsg
+(
+Id_TipoMsg Int Not Null Identity Primary Key,
+Id_AreaMsg Int Not Null References Tb_AreaMsg(Id_AreaMsg),
+TipoMsg varchar(25)
+)
+
+Insert Into Tb_TipoMsg values (3,'Revisão de Viatura') -- ID 1
+
+--Drop Table Tb_Msg
+Create Table Tb_Msg
+(
+Id_Msg Int Not Null Identity Primary Key,
+Id_TipoMsg Int Not Null References Tb_TipoMsg (Id_TipoMsg),
+Data DateTime Not Null default GetDate(),
+Asunto varchar(500) Not Null,
+Texto varchar(2500) Not Null, 
+DataRead Datetime
+)
+
+go
+
+--Insert Into Tb_Msg(Id_TipoMsg,Asunto,Texto) values (1,'Teste','Texto do teste')
+
+Alter Proc CargarMensagens
+@Filtro varchar (25)
+as
+Begin
+
+Declare @Texto varchar(25) = '%' +LTRIM(RTRIM(@Filtro)) + '%'
+
+SELECT Tb_Msg.Id_Msg, Tb_TipoMsg.TipoMsg, Tb_Msg.Asunto, Tb_Msg.Data, Tb_Msg.DataRead FROM Tb_Msg INNER JOIN Tb_TipoMsg ON Tb_Msg.Id_TipoMsg = Tb_TipoMsg.Id_TipoMsg WHERE (Tb_TipoMsg.Id_AreaMsg = 3) and (Asunto like @Texto or Texto like @Texto ) ORDER BY Tb_Msg.Data DESC
+
+End
+go
+
+
+--SELECT COUNT(Tb_Msg.Id_Msg) AS Total
+--FROM            Tb_TipoMsg INNER JOIN
+--                         Tb_Msg ON Tb_TipoMsg.Id_TipoMsg = Tb_Msg.Id_TipoMsg
+--WHERE        (Tb_TipoMsg.Id_AreaMsg = 3) and (Tb_Msg.DataRead IS NULL)
+
+
+--------------------------------------------------------------------------------------------------Patrimonio---------------------------------------------------------------------------
 
 Create Table Tb_TipoEquip
 (
@@ -588,4 +650,182 @@ SELECT        SUM(Tb_EntradaStock.Quantidade) AS Entrada, SUM(Tb_SaidaStock.Quan
 FROM            Tb_EntradaStock CROSS JOIN
                          Tb_SaidaStock
 GROUP BY Tb_SaidaStock.Quantidade
+go
 
+---------------------------------------------------------------------------------------------------------Transportes--------------------------------------------------------------------------------------------
+------------------------------Viaturas-------------------
+Create Table Tb_Combustivel
+(
+Id_Combustivel Int Not Null Identity Primary Key,
+Combustivel varchar(10) 
+)
+Insert Into Tb_Combustivel values ('Gasolina')
+Insert Into Tb_Combustivel values ('Gasóleo')
+go
+
+--Drop Table Tb_Viatura
+Create Table Tb_Viatura
+(
+Id_Viatura Int Not Null Identity Primary Key,
+Marca varchar(25) Not Null,
+Modelo varchar(25) Not Null,
+Matricula varchar(11) Not Null,
+Km Int Not Null Default 0,
+NumMotor varchar(20) Not Null,
+Pneus varchar(10) Not Null,
+Id_Combustivel Int Not Null References Tb_Combustivel (Id_Combustivel),
+KmCheck Int Not Null Default 5000
+)
+go
+
+--Alter Table Tb_Viatura Add KmCheck Int Not Null Default 5000
+--go
+
+Create Proc AddViatura
+@Id_Usuario Int,
+@Marca varchar(25),
+@Modelo varchar(25),
+@Matricula varchar(11),
+@Km Int,
+@NumMotor varchar(20),
+@Pneus varchar(10),
+@Id_Combustivel Int
+as
+Begin
+Insert Into Tb_Viatura(Marca,Modelo,Matricula,Km,NumMotor,Pneus,Id_Combustivel) values (@Marca,@Modelo,@Matricula,@Km,@NumMotor,@Pneus,@Id_Combustivel)
+
+Insert Into Tb_Reg(Id_Usuario,Reg) values (@Id_Usuario,'Cadastro da viatura <a>'+@Matricula+'</a>.')
+
+End
+go
+------------------------------Revisões-------------------
+Create Table Tb_CheckViatura
+(
+Id_CheckViatura Int Not Null Identity Primary Key,
+Id_Viatura Int Not Null References Tb_Viatura (Id_Viatura),
+Entidade varchar(50) Not Null,
+Data Date Not Null,
+Km Int Not Null,
+Custo Money Not Null,
+Obs varchar(1000) Not Null
+)
+go
+
+Create Proc AddCheckViatura
+@Id_Usuario Int,
+@Id_Viatura Int,
+@Entidade varchar(50),
+@Data Date,
+@Km Int,
+@Custo Money,
+@Obs varchar(1000)
+as
+Begin
+
+Insert Into Tb_CheckViatura(Id_Viatura,Entidade,Data,Km,Custo,Obs) values (@Id_Viatura,@Entidade,@Data,@Km,@Custo,@Obs)
+
+declare @Id_CheckViatura varchar(10) = (Select IDENT_CURRENT('Tb_CheckViatura'))
+
+Insert into Tb_Reg(Id_Usuario,Reg) values (@Id_Usuario,'Registo Nº: '+@Id_CheckViatura +' de <b>Manutenção a Viatura</b>')
+
+End
+
+------------------------------Motoristas-------------------
+Create Table Tb_Motorista
+(
+Id_Motorista Int Not Null Identity Primary Key,
+Nome varchar(50) Not Null,
+DataNasc Date Not Null,
+BI varchar(15) Not Null,
+Carta varchar(15) Not Null,
+Activo Bit Not Null Default 1
+)
+go
+
+
+Create Proc AddMotorista
+@Id_Usuario Int,
+@Nome varchar(50),
+@DataNasc Date,
+@BI varchar(15),
+@Carta varchar(15)
+as
+Begin
+
+Insert Into Tb_Motorista(Nome,DataNasc, BI, Carta) values (@Nome,@DataNasc,@BI,@Carta)
+
+Insert Into Tb_Reg(Id_Usuario,Reg) values (@Id_Usuario,'Cadastro do motorista <a>'+@Nome+'</a>.')
+
+End
+go
+
+------------------------------Saidas-------------------
+--Drop table Tb_Saida 
+Create Table Tb_Saida
+(
+Id_Saida Int Not Null Identity Primary Key,
+Id_Viatura Int Not Null References Tb_Viatura (Id_Viatura),
+Id_Motorista Int Not Null References Tb_Motorista (Id_Motorista),
+Data Date Not Null Default GetDate(),
+HoraSaida Time Not Null,
+HoraEntrada Time Not Null,
+KmSaida Int Not Null,
+KmEntrada Int Not Null,
+Rota varchar(100) Not Null,
+Obs varchar(1000) Not Null
+)
+go
+
+Create Proc AddSaida
+@Id_Usuario Int,
+@Id_Viatura Int,
+@Id_Motorista Int,
+@Data Date,
+@HoraSaida time,
+@HoraEntrada time,
+@KmEntrada Int,
+@Rota varchar(100),
+@Obs varchar(1000)
+as
+Begin
+
+Declare @KmSaida int = (Select Km from Tb_Viatura Where Id_Viatura = @Id_Viatura)
+
+Insert Into Tb_Saida
+(Id_Viatura,Id_Motorista, Data,HoraSaida,HoraEntrada,KmSaida,KmEntrada,Rota,Obs)
+values
+(@Id_Viatura,@Id_Motorista, @Data, @HoraSaida,@HoraEntrada,@KmSaida,@KmEntrada,@Rota,@Obs)
+
+Update Tb_Viatura Set Km = @KmEntrada where Id_Viatura = @Id_Viatura
+
+Declare @LastCheck Int = IsNull((Select Max(Km) from Tb_CheckViatura Where Id_Viatura = @Id_Viatura),0)
+
+Declare @Matricula varchar(11) = (Select Matricula from Tb_Viatura where Id_Viatura = @Id_Viatura)
+
+Declare @Marca varchar(25) = (Select Marca from Tb_Viatura Where Id_Viatura = @Id_Viatura)
+
+Declare @Modelo varchar(25) = (Select Modelo from Tb_Viatura Where Id_Viatura = @Id_Viatura)
+
+Declare @KmCheck Int = (Select KmCheck from Tb_Viatura where Id_Viatura = @Id_Viatura)
+
+
+If (@KmCheck < (@KmEntrada - @LastCheck))
+begin
+INSERT INTO [dbo].[Tb_Msg]
+           ([Id_TipoMsg]
+           ,[Asunto]
+           ,[Texto])
+     VALUES
+           (1
+           ,'Revisão viatura <a>'+@Matricula+'</a>'
+           ,'A viatura de Marca: '+@Marca+ ' e Modelo: '+@Modelo+' com matricula <a>' + @Matricula + '</a>, atingiu a kilometragem máxima sem revisão por mais de '+ CONVERT(varchar(6),((@KmEntrada - @LastCheck)- @KmCheck )) +' quilometros.</br></br> Efectue a revisão e insira no sistema para deixar de receber esta mensagem.')
+
+
+    --Insert Into Tb_Msg(Id_TipoMsg,Asunto,Texto) values (1,'Revisão viatura <a>'+@Matricula+'</a>','A viatura de Marca: '+@Marca+ ' e Modelo: '+@Modelo+' com matricula <a>' + @Matricula + '</a>, atingiu a kilometragem máxima sem revisão.</br> Efectue a revisão e insira no sistema para deixar de receber esta mensagem.')
+	End
+
+Insert Into Tb_Reg(Id_Usuario,Reg) values (@Id_Usuario,'Lanzamento de Saida Nº '+ CONVERT(varchar(16), IDENT_CURRENT('Tb_Saida')))
+
+End
+
+Exec AddSaida 1,2,1,'2015-10-31','16:30','22:00','75901','Teste de manutenção','Sem novidade'

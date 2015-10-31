@@ -7,108 +7,117 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Touro {
+namespace Touro.Transportes {
     
     
-    public partial class LayOut {
+    public partial class Viatura {
         
         /// <summary>
-        /// cphHead control.
+        /// fvInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder cphHead;
+        protected global::System.Web.UI.WebControls.FormView fvInfo;
         
         /// <summary>
-        /// form1 control.
+        /// SqlDataSourceInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceInfo;
         
         /// <summary>
-        /// btnLogOff control.
+        /// lvSaidas control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnLogOff;
+        protected global::System.Web.UI.WebControls.ListView lvSaidas;
         
         /// <summary>
-        /// LoginName1 control.
+        /// SqlDataSourceSaidas control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LoginName LoginName1;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceSaidas;
         
         /// <summary>
-        /// Soli control.
+        /// lvManu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Soli;
+        protected global::System.Web.UI.WebControls.ListView lvManu;
         
         /// <summary>
-        /// Patr control.
+        /// SqlDataSourceManu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Patr;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceManu;
         
         /// <summary>
-        /// Tran control.
+        /// txtEntidade control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Tran;
+        protected global::System.Web.UI.WebControls.TextBox txtEntidade;
         
         /// <summary>
-        /// Area control.
+        /// txtData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Area;
+        protected global::System.Web.UI.WebControls.TextBox txtData;
         
         /// <summary>
-        /// Esta control.
+        /// txtKm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Esta;
+        protected global::System.Web.UI.WebControls.TextBox txtKm;
         
         /// <summary>
-        /// Admi control.
+        /// txtCusto control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Admi;
+        protected global::System.Web.UI.WebControls.TextBox txtCusto;
         
         /// <summary>
-        /// cphBody control.
+        /// txtObs control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder cphBody;
+        protected global::System.Web.UI.WebControls.TextBox txtObs;
+        
+        /// <summary>
+        /// btnOk control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnOk;
     }
 }

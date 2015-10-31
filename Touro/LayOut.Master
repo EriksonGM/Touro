@@ -5,12 +5,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt">
 <head runat="server">
     <meta charset="utf-8">
-    <title>GestProjeto</title>
+    <title>Touro</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <meta name="description" content="Gestão de Projetos">
+    <meta name="description" content="Touro">
     <meta name="author" content="Erikson Melgarejo">
 
     <%--<link type='text/css' href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600' rel='stylesheet'>--%>
@@ -24,6 +24,11 @@
     <link type="text/css" href="/assets/plugins/codeprettifier/prettify.css" rel="stylesheet">
     <!-- Code Prettifier -->
     <link type="text/css" href="/assets/plugins/iCheck/skins/minimal/blue.css" rel="stylesheet">
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+
+    <link type="text/css" href="/assets/plugins/pines-notify/pnotify.css" rel="stylesheet">
+
     <!-- iCheck -->
 
     <!--[if lt IE 10]>
@@ -36,6 +41,9 @@
     <%--<link type="text/css" href="/assets/plugins/form-fseditor/fseditor.css" rel="stylesheet">--%>
     <!-- FullScreen Editor -->
     <script type="text/javascript" src="/assets/js/jquery-2.1.4.min.js"></script>
+
+    <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+        <!-- Load Bootstrap -->
     <style>
         .tab-pane{
             min-height:200px;
@@ -98,7 +106,7 @@
                     <a href="#" class="toggle-fullscreen"><span class="icon-bg"><i class="ti ti-fullscreen"></i></span></a>
                 </li>
 
-                <li class="dropdown toolbar-icon-bg hidden-xs">
+                <%--<li class="dropdown toolbar-icon-bg hidden-xs">
                     <a href="#" class="hasnotifications dropdown-toggle" data-toggle='dropdown'><span class="icon-bg"><i class="ti ti-email"></i></span><span
                         class="badge badge-deeporange">2</span></a>
                     <div class="dropdown-menu notifications arrow">
@@ -190,9 +198,9 @@
                             <a href="#">See all messages</a>
                         </div>
                     </div>
-                </li>
+                </li>--%>
 
-                <li class="dropdown toolbar-icon-bg">
+                <%--<li class="dropdown toolbar-icon-bg">
                     <a href="#" class="hasnotifications dropdown-toggle" data-toggle='dropdown'><span class="icon-bg"><i class="ti ti-bell"></i></span><span class="badge badge-deeporange">2</span></a>
                     <div class="dropdown-menu notifications arrow">
                         <div class="topnav-dropdown-header">
@@ -261,7 +269,7 @@
                             <a href="#">Ver todas as notificações</a>
                         </div>
                     </div>
-                </li>
+                </li>--%>
 
                 <li class="dropdown toolbar-icon-bg">
                     <a href="#" class="dropdown-toggle username" data-toggle="dropdown">
@@ -269,14 +277,16 @@
                     </a>
                     <ul class="dropdown-menu userinfo arrow">
                         <li><a href="#/"><i class="ti ti-user"></i><span>Perfil</span></a></li>
-                        <li><a href="#/"><i class="ti ti-panel"></i><span>Account</span></a></li>
+                        <%--<li><a href="#/"><i class="ti ti-panel"></i><span>Account</span></a></li>
                         <li><a href="#/"><i class="ti ti-settings"></i><span>Settings</span></a></li>
                         <li class="divider"></li>
                         <li><a href="#/"><i class="ti ti-stats-up"></i><span>Earnings</span></a></li>
                         <li><a href="#/"><i class="ti ti-view-list-alt"></i><span>Statement</span></a></li>
-                        <li><a href="#/"><i class="ti ti-money"></i><span>Withdrawals</span></a></li>
+                        <li><a href="#/"><i class="ti ti-money"></i><span>Withdrawals</span></a></li>--%>
                         <li class="divider"></li>
-                        <li><a href="#/"><i class="ti ti-shift-right"></i><span>Terminar Sessão</span></a></li>
+                        <%--<li><a href="#/"><i class="ti ti-shift-right"></i><span>Terminar Sessão</span></a></li>--%>
+                         <li>
+                             <asp:LinkButton ID="btnLogOff" runat="server" OnClick="btnLogOff_Click"><i class="ti ti-shift-right"></i><span>Terminar Sessão</span></asp:LinkButton></li>
                         <%--<li><a href="#/"><i class="ti ti-shift-right"></i><span>
                             <asp:LoginStatus ID="LoginStatus1" runat="server"/>
                         </span></a></li>--%>
@@ -299,7 +309,7 @@
                                             <img src="/assets/img/taurus_mini.png" class="img-responsive img-circle">
                                         </div>
                                         <div class="info">
-                                            <span class="username"> <%= Nome() %></span>
+                                            <span class="username"> <%= NomeUsuario %></span>
                                             <span class="useremail">
                                                 <asp:LoginName ID="LoginName1" runat="server" />
                                             </span>
@@ -379,32 +389,17 @@
                                                 <li><a href="ui-imagecarousel.html">Images &amp; Carousel</a></li>--%>
                                             </ul>
                                         </li>
-                                        <li runat="server" id="Tran"><a href="javascript:;"><i class="ti ti-truck"></i><span>Trasportes</span></a>
+                                         <li runat="server" id="Tran">
+                                            <a href="javascript:;"><i class="ti ti-truck"></i><span>Transportes</span><span class="badge badge-teal"><%= UnreadTransportes  %></span></a>
                                             <ul class="acc-menu">
-                                                <li><a href="ui-tiles.html">Criar Nova</a></li>
-                                                <li><a href="custom-skylo.html">Pesquisar</a></li>
-                                                <%--<li><a href="custom-bootbox.html">Bootbox</a></li>
-                                                <li><a href="custom-pines.html">Pines Notification</a></li>
-                                                <li><a href="custom-pulsate.html">Pulsate</a></li>
-                                                <li><a href="custom-knob.html">jQuery Knob</a></li>
-                                                <li><a href="custom-ionrange.html">Ion Range Slider</a></li>--%>
+                                                <li><a href="/Transportes/Motoristas.aspx">Motoristas</a></li>
+                                                <li><a href="/Transportes/Viaturas.aspx">Viaturas</a></li>
+                                                <li><a href="/Transportes/Abastecimentos.aspx">Abastecimentos</a></li>
+                                                <li><a href="/Transportes/Saidas.aspx">Saidas</a></li>
+                                                <li><a href="/Transportes/Mensagens.aspx"><span class="badge badge-teal"><%= UnreadTransportes  %></span>Mensagens</a></li>
                                             </ul>
                                         </li>
-                                        <%--<li><a href="javascript:;"><i class="ti ti-pencil"></i><span>Forms</span></a>
-                                            <ul class="acc-menu">
-                                                <li><a href="ui-forms.html">Form Layout</a></li>
-                                                <li><a href="form-components.html">Form Components</a></li>
-                                                <li><a href="form-pickers.html">Pickers</a></li>
-                                                <li><a href="form-wizard.html">Form Wizard</a></li>
-                                                <li><a href="form-validation.html">Form Validation</a></li>
-                                                <li><a href="form-masks.html">Form Masks</a></li>
-                                                <li><a href="form-dropzone.html">Dropzone Uploader</a></li>
-                                                <li><a href="form-summernote.html">Summernote</a></li>
-                                                <li><a href="form-markdown.html">Markdown Editor</a></li>
-                                                <li><a href="form-xeditable.html">Inline Editor</a></li>
-                                                <li><a href="form-gridforms.html">Grid Forms</a></li>
-                                            </ul>
-                                        </li>--%>
+                                       
                                         <li runat="server" id="Area">
                                             <a href="javascript:;"><i class="ti ti-desktop"></i><span>Area Técnica</span></a>
                                             <ul class="acc-menu">
@@ -434,7 +429,6 @@
                                                         <li><a href="#">Basic</a></li>
                                                     </ul>
                                                 </li>
-                                                <%--<li><a href="#">Easy Pie Chart</a></li>--%>
                                             </ul>
                                         </li>
 
@@ -452,8 +446,6 @@
                                                     <ul class="acc-menu">
                                                         <li><a href="/Admin/DadosPatrimonio.aspx">Tipos e Marcas</a></li>
                                                         <li><a href="/Admin/ModeloEquipamentos.aspx">Modelos de Equipamentos</a></li>
-                                                        <%--<li><a href="#">Basic</a></li>
-                                                        <li><a href="#">Basic</a></li>--%>
                                                     </ul>
                                                 </li>
                                                 <li><a href="/Admin/Registo.aspx">Registo</a></li>
@@ -673,8 +665,7 @@
         <!-- Load jQuery -->
         <script type="text/javascript" src="/assets/js/jqueryui-1.10.3.min.js"></script>
         <!-- Load jQueryUI -->
-        <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
-        <!-- Load Bootstrap -->
+        
         <script type="text/javascript" src="/assets/js/enquire.min.js"></script>
         <!-- Load Enquire -->
 
@@ -703,6 +694,9 @@
         <script type="text/javascript" src="/assets/demo/demo.js"></script>
         <script type="text/javascript" src="/assets/demo/demo-switcher.js"></script>
 
+
+         <script type="text/javascript" src="/assets/plugins/pines-notify/pnotify.min.js"></script>
+
         <!-- End loading site level scripts -->
 
         <!-- Load page level scripts-->
@@ -715,6 +709,69 @@
         <script type="text/javascript" src="assets/demo/demo-profile.js"></script>--%>
 
         <!-- End loading page level scripts-->
+
+        <%--Esta é uma janela para exibir alertas que usa a função modal() do Bootstrap--%>
+        <div class="modal fade" id="divAlert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">
+                            <span class="icon-stack">
+                                <i class="icon-sign-blank icon-stack-base"></i>
+                                <i class="icon-info icon-light"></i>
+                            </span>
+                            Informação
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <% if (Session["Alerta"] != null)
+                            { %>
+                        <%: Session["Alerta"].ToString() %>
+                        <% } %>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+   
+
+    <% if (Session["Alerta"] != null)
+        { %>
+    <script>
+        $(function () {
+            $("#divAlert").modal();
+        });
+    </script>
+    <% Session["Alerta"] = null; %>
+    <% } %>
+
+
+    <% if (Session["Notice"] != null)
+        { %>
+    <script>
+        $(function () {
+            new PNotify({
+                icon: 'fa fa-info-circle',
+                title: 'Touro',
+                text: 'Operação completada com exito.',
+                type: 'success',
+
+                delay: 3000,
+                //styling: 'fontawesome',
+                animate: {
+                    animate: true,
+                    in_class: 'slideInDown',
+                    out_class: 'slideOutUp'
+                }
+            });
+        });
+    </script>
+    <% Session["Notice"] = null; %>
+    <% } %>
 
     </form>
 </body>

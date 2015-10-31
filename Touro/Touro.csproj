@@ -48,6 +48,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -72,6 +73,7 @@
     <Content Include="assets\plugins\pines-notify\pnotify.css" />
     <Content Include="assets\plugins\pines-notify\pnotify.js" />
     <Content Include="assets\plugins\pines-notify\pnotify.min.js" />
+    <Content Include="LayOut.txt" />
     <Content Include="packages.config" />
     <Content Include="assets\css\bootstrap-theme.css.map" />
     <Content Include="assets\css\bootstrap.css.map" />
@@ -144,6 +146,14 @@
     <Content Include="Patrimonio\Salas.aspx" />
     <Content Include="Patrimonio\Web.config" />
     <Content Include="Solicitacoes\SolicitarConsumiveis.aspx" />
+    <Content Include="Transportes\Abastecimentos.aspx" />
+    <Content Include="Transportes\Dados.xml" />
+    <Content Include="Transportes\Mensagens.aspx" />
+    <Content Include="Transportes\Motorista.aspx" />
+    <Content Include="Transportes\Motoristas.aspx" />
+    <Content Include="Transportes\Saidas.aspx" />
+    <Content Include="Transportes\Viatura.aspx" />
+    <Content Include="Transportes\Viaturas.aspx" />
     <Content Include="Transportes\Web.config" />
     <Content Include="Solicitacoes\Web.config" />
     <None Include="Web.Debug.config">
@@ -700,7 +710,6 @@
     <Content Include="Global.asax" />
     <Content Include="favicon.ico" />
     <Content Include="Inicio.aspx" />
-    <Content Include="LayOut.txt" />
     <Content Include="Login.aspx" />
     <Content Include="Solicitacoes\AreaTecnica.aspx" />
     <Content Include="Solicitacoes\Patrimonio.aspx" />
@@ -880,6 +889,56 @@
     <Compile Include="Solicitacoes\Transportes.aspx.designer.cs">
       <DependentUpon>Transportes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Transportes\Abastecimentos.aspx.cs">
+      <DependentUpon>Abastecimentos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Transportes\Abastecimentos.aspx.designer.cs">
+      <DependentUpon>Abastecimentos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Transportes\Mensagens.aspx.cs">
+      <DependentUpon>Mensagens.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Transportes\Mensagens.aspx.designer.cs">
+      <DependentUpon>Mensagens.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Transportes\Motorista.aspx.cs">
+      <DependentUpon>Motorista.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Transportes\Motorista.aspx.designer.cs">
+      <DependentUpon>Motorista.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Transportes\Motoristas.aspx.cs">
+      <DependentUpon>Motoristas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Transportes\Motoristas.aspx.designer.cs">
+      <DependentUpon>Motoristas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Transportes\Saidas.aspx.cs">
+      <DependentUpon>Saidas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Transportes\Saidas.aspx.designer.cs">
+      <DependentUpon>Saidas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Transportes\Viatura.aspx.cs">
+      <DependentUpon>Viatura.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Transportes\Viatura.aspx.designer.cs">
+      <DependentUpon>Viatura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Transportes\Viaturas.aspx.cs">
+      <DependentUpon>Viaturas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Transportes\Viaturas.aspx.designer.cs">
+      <DependentUpon>Viaturas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Estatistica\" />
